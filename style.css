@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
+
+body {
+  background-color: #1f1f1f;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  padding: 20px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-size: 5em;
+  color: skyblue;
+  opacity: 0.9;
+  font-weight: 100;
+}
+
+p {
+  padding-left: 100px;
+  color: whitesmoke;
+}
+
+.nodes {
+  stroke-width: 1;
+  stroke: black;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 2px;
+  color: black;
+  font: 17px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
