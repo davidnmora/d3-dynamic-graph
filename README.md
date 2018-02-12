@@ -3,7 +3,7 @@
 # DynamicGraph
 DynamicGraph provides a high level API to create interactive, dynamically updating D3.js force-directed graph layout visualizations. Create and interactively update graphs with a single line of code. 
 
-Because the only thing cooler than understanding graphs is understanding them dynamically accross time, space, and properties. 
+The only thing cooler than visualizing graphs is visualizing them dynamically accross time, space, and properties. :)
 
 ## How to use DynamicGraph:
 Assuming you've got a graph in the format 
