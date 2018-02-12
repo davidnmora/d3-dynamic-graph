@@ -29,7 +29,7 @@ vis.updateVis(nodes, links) // Vuala! The graph gracefuly transitions states.
 You can set optional parameters on instantiation via
 ```javascript
 let vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
-					 	width: 1000px, 
+					 	width: 1000, // px
 					 	nodeColor: node => node.color,
 					 	// etc
 					})
