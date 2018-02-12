@@ -1,7 +1,9 @@
 ![Screenshot of DynamicGraph](https://raw.githubusercontent.com/davidnmora/dynamic-graph/master/dynamic-graph-screenshot.png "Screenshot of DynamicGraph")
 
 # DynamicGraph
-DynamicGraph provides a high level API to create interactive, dynamically updating D3 Force Layout graph visualizations. (Graph in the computer science "network" sense, not plot sense. :)
+DynamicGraph provides a high level API to create interactive, dynamically updating D3.js force-directed graph layout visualizations. Create and interactively update graphs with a single line of code. 
+
+Because the only thing cooler than understanding graphs is understanding them dynamically accross time, space, and properties. 
 
 ## How to use DynamicGraph:
 Assuming you've got a graph in the format 
@@ -9,24 +11,20 @@ Assuming you've got a graph in the format
 let nodes = [{id: "foo", ...}, {id: "bar", ...}, ...]
 let links = [{source: "foo", target: "bar"}, ...]
 ```
-and an have added DynamicGraph to your js files
-```html
-<script src="dynamic-graph.js"></script>
-```
-with a designated container element like
+have a designated container for the vis and an have added DynamicGraph to your project
 ```html
 <div id="dynamic-graph-container"></div>
+
+<script src="dynamic-graph.js"></script>
 ```
 simply create and launch a graph with default properties via
 ```javascript
 let vis = DynamicGraph(d3.select("#dynamic-graph-container"))
             .updateVis(nodes, links)
+// Update nodes and/or links via filters, queries etc...
+vis.updateVis(nodes, links) // Vuala! The graph gracefuly transitions states.
 ```
-and then update it as you wish simply by passing an updated nodes and links array:
-```javascript
-// Update nodes and/or links...
-vis.updateVis(nodes, links)
-```
+
 ## DynamicGraph API:
 You can set optional parameters on instantiation via
 ```javascript
