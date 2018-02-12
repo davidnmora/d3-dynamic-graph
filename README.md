@@ -11,8 +11,17 @@ Assuming you've got a graph in the format
 let nodes = [{id: "foo", ...}, {id: "bar", ...}, ...]
 let links = [{source: "foo", target: "bar"}, ...]
 ```
+<<<<<<< Updated upstream
 have a designated container for the vis and an have added DynamicGraph to your project
 ```html
+=======
+and an have added DynamicGraph to your js files
+```javascript
+<script src="dynamic-graph.js"></script>
+```
+with a designated container element like
+```javascript
+>>>>>>> Stashed changes
 <div id="dynamic-graph-container"></div>
 
 <script src="dynamic-graph.js"></script>
@@ -24,7 +33,15 @@ let vis = DynamicGraph(d3.select("#dynamic-graph-container"))
 // Update nodes and/or links via filters, queries etc...
 vis.updateVis(nodes, links) // Vuala! The graph gracefuly transitions states.
 ```
+<<<<<<< Updated upstream
 
+=======
+and then update it as you wish simply by passing an updated nodes and links array:
+```javascript
+// Update nodes and/or links...
+vis.updateVis(nodes, links)
+```
+>>>>>>> Stashed changes
 ## DynamicGraph API:
 You can set optional parameters on instantiation via
 ```javascript
@@ -34,7 +51,11 @@ let vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
 					 	// etc
 					})
 ```
+<<<<<<< Updated upstream
 A number of commonly used aspects of the graph can also be updating after instantiation (though more could be added):
+=======
+A number of commonly used aspects of the graph can also be updating after instantiation (though more could be added):javascript
+>>>>>>> Stashed changes
 ```javascript
 let vis = DynamicGraph(d3.select("#dynamic-graph-container"))
 vis.nodeColor(node => node.color)
