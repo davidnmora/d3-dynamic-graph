@@ -1,23 +1,28 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,600');
 
 body {
   background-color: #1f1f1f;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+#container {
+  margin-left: 80px;
 }
 
 h1 {
-  padding: 20px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
   font-size: 5em;
   color: skyblue;
   opacity: 0.9;
   font-weight: 100;
+  margin-bottom: 10px;
 }
 
 p {
-  padding-left: 100px;
   color: whitesmoke;
+}
+
+p.sub-text {
+  font-size: 22px;
 }
 
 .nodes {
@@ -35,4 +40,21 @@ div.tooltip {
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+}
+
+button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 12px 12px;
+
+  cursor: pointer;
+  user-select: none;
+  transition: all 150ms linear;
+  color: black;
+  font-weight: bold;
+  font-size: 22px;
+  border: 0 none;
+  border-radius: 4px;
+
+  box-shadow: 2px 5px 10px skyblue;
 }

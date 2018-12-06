@@ -78,9 +78,13 @@ Promise.all([
                 .tooltipInnerHTML(tooltipInnerHTML)
                 .updateVis(nodes, links)
 
-    // Update vis (filter out half the nodes)
-    nodes = graph.nodes.filter(node => shouldKeepNode(node))
-    links = graph.links.filter(link => shouldKeepLink(graph.nodesById, link))
+    d3.select('#toggle-nodes').on('click', () => {
+			// Update vis (filter out half the nodes)
+			nodes = graph.nodes.filter(node => shouldKeepNode(node))
+			links = graph.links.filter(link => shouldKeepLink(graph.nodesById, link))
+			vis.updateVis(nodes, links)
+    })
+    
     // setTimeout(() => vis.updateVis(nodes, links), 2000)
 
   }); // closes Primise.then(...)
