@@ -1,11 +1,11 @@
 ![Screenshot of DynamicGraph](https://raw.githubusercontent.com/davidnmora/dynamic-graph/master/dynamic-graph-screenshot.png "Screenshot of DynamicGraph")
 
 # DynamicGraph
+Turns out transitioning/animating between states in D3 Force Layout is pretty non-trivial (ie 300+ lines of code). So I made a thing to make it easier (ie 1 line of code).
+
 DynamicGraph provides a high level API to create interactive, dynamically updating D3.js force-directed graph layout visualizations. Create and interactively update graphs with a single line of code.
 
-The only thing cooler than visualizing graphs is visualizing them dynamically accross time, space, and properties. :)
-
-## [See DynamicGraph in action here](https://davidnmora.github.io/positive-psych-vis/)
+## [See DynamicGraph in action here](https://davidnmora.github.io/dynamic-graph/)
 
 ## How to use DynamicGraph:
 Assuming you've got a graph in the format 
