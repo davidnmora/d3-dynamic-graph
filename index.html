@@ -1,26 +1,184 @@
-<!DOCTYPE html>
-<html lang="en" >
 <head>
-	<meta charset="UTF-8">
-	<title>Force layout with positive psych data</title>
-	<link rel="stylesheet" href='css/d3.slider.css'/>
-	<link rel="stylesheet" href="style.css"/>
+  <title>DynamicGraph demo</title>
+  <style>
+    body {
+      background-color: #8e8e8e;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    #container {
+      margin-left: 80px;
+    }
+
+    h1 {
+      font-size: 5em;
+      color: skyblue;
+      opacity: 0.9;
+      font-weight: 100;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: whitesmoke;
+    }
+
+    p.sub-text {
+      font-size: 22px;
+    }
+
+    .nodes {
+      stroke-width: 1;
+      stroke: black;
+    }
+
+    div.tooltip {
+      position: absolute;
+      text-align: left;
+      padding: 2px;
+      color: black;
+      font: 17px sans-serif;
+      background: lightsteelblue;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    button {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      padding: 12px 12px;
+
+      cursor: pointer;
+      user-select: none;
+      transition: all 150ms linear;
+      color: black;
+      font-weight: bold;
+      font-size: 22px;
+      border: 0 none;
+      border-radius: 4px;
+
+      box-shadow: 2px 5px 10px skyblue;
+    }
+  </style>
 </head>
-
 <body>
-<a href="https://github.com/davidnmora/dynamic-graph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-
-<div id="container">
-	<h1>DynamicGraph.js</h1>
-	<p class="sub-text"><b>A high-level API to smoothly update D3's force layout across data updates.</b> Check it out on <a href="https://github.com/davidnmora/dynamic-graph">GitHub</a></p>
-	<p>The graph your looking at, which is for demonstration purposes only, displays relationships between entities and events (blue), actions (red), and data records (grey) used in a database of health and criminal justice records.</p>
-	<p>Made with love by <a href="https://davidnmora.github.io/david/">David Mora</a></p>
-	<button id="toggle-nodes">Click here to randomly remove data (watch vis update smoothly!)</button>
-	<div id="canvas"></div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
-<script src="js/dynamic-graph.js"></script>
-<script  src="js/index.js"></script>
-
+  <div id="container">
+    <h1>DynamicGraph.js</h1>
+    <p class="sub-text">
+      <b
+        >A high-level API to smoothly update D3's force layout across data
+        updates.
+      </b>
+      Check it out on
+      <a href="https://github.com/davidnmora/dynamic-graph">GitHub</a>
+    </p>
+    <p>
+      The graph your looking at, which is for demonstration purposes only,
+      displays relationships between entities and events (blue), actions (red),
+      and data records (grey) used in a database of health and criminal justice
+      records.
+    </p>
+    <p>
+      Made with love by
+      <a href="https://davidnmora.github.io/david/">David Mora</a>
+    </p>
+    <button id="toggle-nodes">
+      Click here to randomly remove data (watch vis update smoothly!)
+    </button>
+    <div id="dynamic-graph-container" />
+  </div>
 </body>
-</html>
+
+<script type="module">
+  import * as d3 from "d3";
+  import DynamicGraph from "./src/dynamicgraph";
+
+  // 1. Set display logic
+  let minRadius = 7,
+    scaleRadiusDownBy = 5;
+  const setNodeRadiusAndDegree = (node) => {
+    if (node.radius !== undefined) return node.radius;
+    node.degree = graph.links.filter((l) => {
+      return l.source == node.id || l.target == node.id;
+    }).length;
+    node.radius = minRadius + node.degree / scaleRadiusDownBy;
+  };
+
+  // Set node color based on type
+  const nodeColor = (node) => {
+    switch (getNodeInfo(node).category) {
+      case "AssociationType":
+        return "darkred";
+      case "EntityType":
+        return "skyblue";
+      case undefined:
+        return "#525252";
+      default:
+        console.error("ERROR: node improperly typed: ", node);
+        return "red";
+    }
+  };
+
+  // Tooltip display
+  const tooltipInnerHTML = (node) => {
+    return getNodeInfo(node).title;
+  };
+
+  // 2. Fetch dataset
+  const graphDataJSONUrl =
+    "https://raw.githubusercontent.com/davidnmora/open-lattice-edm-vis/master/graph-data.json";
+
+  const [graph] = await Promise.all([
+    new Promise((res, rej) =>
+      d3.json(graphDataJSONUrl, function (error, JSONdata) {
+        if (error) {
+          rej(error);
+        } else {
+          res(JSONdata);
+        }
+      })
+    ),
+  ]);
+
+  // 3. Format the specific fetched data into standard shape for DynamicGraph
+  graph.nodesById = {};
+  const namespaceHist = {};
+  const getNodeInfo = (node) => (node.type ? node : node.entityType);
+  for (const node of graph.nodes) {
+    graph.nodesById[node.id] = node;
+    let namespace = getNodeInfo(node).type.namespace;
+    if (!namespaceHist[namespace]) namespaceHist[namespace] = 0;
+    namespaceHist[namespace]++;
+    setNodeRadiusAndDegree(node);
+  }
+
+  for (const link of graph.links) {
+    link.sourceId = link.source;
+    link.targetId = link.target;
+  }
+
+  // 5. Initialize DynamicGraph,
+  let vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
+    width: 1000,
+  })
+    .nodeColor(nodeColor)
+    .nodeRadius((node) => node.radius)
+    .tooltipInnerHTML(tooltipInnerHTML)
+    .updateVis(graph.nodes, graph.links);
+
+  // 6. establish update logic
+  const shouldKeepNode = (node) => node.index % 2 === 0; // For testing purposes
+  const shouldKeepLink = (nodesById, link) => {
+    const sourceNode = nodesById[link.sourceId];
+    const targetNode = nodesById[link.targetId];
+    return shouldKeepNode(sourceNode) && shouldKeepNode(targetNode);
+  };
+  d3.select("#toggle-nodes").on("click", () => {
+    // Update vis for demo purposes (filter out half the nodes)
+    const nodes = graph.nodes.filter((node) => shouldKeepNode(node));
+    const links = graph.links.filter((link) =>
+      shouldKeepLink(graph.nodesById, link)
+    );
+    vis.updateVis(nodes, links);
+  });
+</script>

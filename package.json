@@ -1,0 +1,52 @@
+{
+  "name": "dynamicgraph",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Fast, animated zoomable scatterplots scaling to billions of points",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/dynamicgraph.js",
+  "main": "./dist/dynamicgraph.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/dynamicgraph.js",
+      "require": "./dist/dynamicgraph.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite --port 3344 --host",
+    "build": "vite build",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidnmora/dynamicgraph.git"
+  },
+  "keywords": [
+    "Data",
+    "Visualization",
+    "D3",
+    "Scatterplot"
+  ],
+  "author": "David Mora",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidnmora/deepscatter/issues"
+  },
+  "homepage": "https://github.com/davidnmora/deepscatter#readme",
+  "dependencies": {
+    "d3": "^4.13.0"
+  },
+  "devDependencies": {
+    "@types/lodash.merge": "^4.6.7",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-formatter-summary-chart": "^0.2.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-unicorn": "^44.0.2",
+    "terser": "^5.15.1",
+    "vite": "^3.2.3"
+  }
+}
