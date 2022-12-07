@@ -12,6 +12,16 @@ With DynamicGraph, you can smoothly update graphs with a single line of code.
 
 # How to use DynamicGraph
 
+## Run the example locally
+
+```bash
+npm install
+npm run dev
+
+# Build distrubition:
+npm run build
+```
+
 ## Quickstart
 
 Get your graph data in the format

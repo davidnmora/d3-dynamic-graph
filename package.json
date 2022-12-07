@@ -2,7 +2,7 @@
   "name": "dynamicgraph",
   "type": "module",
   "version": "1.0.0",
-  "description": "Fast, animated zoomable scatterplots scaling to billions of points",
+  "description": "A high level API to create interactive, smoothly updating D3.js force-directed graph layout data visualizations",
   "files": [
     "dist"
   ],
@@ -47,7 +47,6 @@
     "d3": "^4.13.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.7",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "eslint": "^8.27.0",
