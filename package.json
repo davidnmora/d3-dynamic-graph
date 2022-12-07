@@ -24,10 +24,18 @@
     "url": "git+https://github.com/davidnmora/dynamicgraph.git"
   },
   "keywords": [
-    "Data",
-    "Visualization",
-    "D3",
-    "Scatterplot"
+    "data",
+    "visualization",
+    "d3",
+    "force",
+    "graph",
+    "directed",
+    "layout",
+    "d3force",
+    "network",
+    "node",
+    "link",
+    "animated"
   ],
   "author": "David Mora",
   "license": "MIT",
