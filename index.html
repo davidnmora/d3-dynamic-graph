@@ -94,7 +94,7 @@
   import DynamicGraph from "./src/d3-dynamic-graph";
 
   // 1. Set display logic
-  let minRadius = 7,
+  const minRadius = 7,
     scaleRadiusDownBy = 5;
   const setNodeRadiusAndDegree = (node) => {
     if (node.radius !== undefined) return node.radius;
@@ -146,7 +146,7 @@
   const getNodeInfo = (node) => (node.type ? node : node.entityType);
   for (const node of graph.nodes) {
     graph.nodesById[node.id] = node;
-    let namespace = getNodeInfo(node).type.namespace;
+    const namespace = getNodeInfo(node).type.namespace;
     if (!namespaceHist[namespace]) namespaceHist[namespace] = 0;
     namespaceHist[namespace]++;
     setNodeRadiusAndDegree(node);
@@ -158,7 +158,7 @@
   }
 
   // 5. Initialize DynamicGraph,
-  let vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
+  const vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
     width: 1000,
   })
     .nodeColor(nodeColor)
