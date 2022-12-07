@@ -1,5 +1,5 @@
 {
-  "name": "dynamicgraph",
+  "name": "d3-dynamic-graph",
   "type": "module",
   "version": "1.0.0",
   "description": "A high level API to create interactive, smoothly updating D3.js force-directed graph layout data visualizations",
