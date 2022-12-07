@@ -1,0 +1,31 @@
+<head>
+  <title>D3 Dynamic Graph simple demo</title>
+</head>
+<body>
+  <div
+    style="background-color: blanchedalmond"
+    id="dynamic-graph-container"
+  ></div>
+</body>
+
+<script type="module">
+  import * as d3 from "d3";
+  import DynamicGraph from "./src/d3-dynamic-graph";
+
+  const nodes = [
+    { id: "foo", radius: 10 },
+    { id: "bar", radius: 20 },
+    { id: "bat", radius: 5 },
+  ];
+  const links = [
+    { source: "foo", sourceId: "foo", target: "bar", targetId: "bar" },
+    { source: "foo", sourceId: "foo", target: "bat", targetId: "bat" },
+  ];
+
+  const vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
+    width: 1000,
+  })
+    .nodeRadius((node) => node.radius)
+    .tooltipInnerHTML((node) => node.id)
+    .updateVis(nodes, links);
+</script>

@@ -31,8 +31,7 @@
       stroke: black;
     }
 
-    div.tooltip {
-      position: absolute;
+    .d3-dynamic-graph-tooltip {
       text-align: left;
       padding: 2px;
       color: black;
@@ -167,7 +166,9 @@
     .updateVis(graph.nodes, graph.links);
 
   // 6. establish update logic
-  const shouldKeepNode = (node) => node.index % 2 === 0; // For testing purposes
+
+  // A bit of a hack: d3Froce updates index under the hood after each filter
+  const shouldKeepNode = (node) => node.index % 2 === 0;
   const shouldKeepLink = (nodesById, link) => {
     const sourceNode = nodesById[link.sourceId];
     const targetNode = nodesById[link.targetId];
@@ -179,6 +180,7 @@
     const links = graph.links.filter((link) =>
       shouldKeepLink(graph.nodesById, link)
     );
+
     vis.updateVis(nodes, links);
   });
 </script>

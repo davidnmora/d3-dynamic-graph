@@ -17,7 +17,8 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     // Link and Node functions ("dummy" unless replaced by API call)
     linkColor: (link) => "white",
     nodeColor: (node) => "skyblue",
-    nodeStartPos: (node) => 100, // x and y, in pixels
+    nodeStartXPos: null, // function, returns pixels
+    nodeStartYPos: null, // function, returns pixels
     nodeRadius: (node) => 5, // pixles
     tooltipInnerHTML: (node) => node["id"],
   };
@@ -38,8 +39,9 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
   let tooltip = d3
     .select("body")
     .append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+    .attr("class", "d3-dynamic-graph-tooltip")
+    .style("opacity", 0)
+    .style("position", "absolute");
 
   const displayNodeTooltip = (d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
@@ -134,12 +136,6 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
       );
   }
 
-  // 5. GRAPH VIS HELPER FUNCTIONS -------------------------------------------------------------------------
-  const radiusFromNode = (d) => {
-    if (d.radius === undefined) d.radius = pubVar.minRadius;
-    return d.radius;
-  };
-
   // 5. UPDATE GRAPH AFTER FILTERING DATA -------------------------------------------------------------------------
   function updateVis(nodes, links) {
     // Initialize layout simulation at startup
@@ -173,7 +169,16 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
       node = svg.append("g").attr("class", "nodes").selectAll("circle");
 
       nodes.forEach((d) => {
-        d.x = d.cx = d.y = d.cy = pubVar.nodeStartPos(d);
+        // if not supplied, distribute randomly
+        const startingXPos = pubVar.nodeStartXPos
+          ? pubVar.nodeStartXPos(d)
+          : Math.random() * pubVar.width;
+        const startingYPos = pubVar.nodeStartYPos
+          ? pubVar.nodeStartYPos(d)
+          : Math.random() * pubVar.height;
+
+        d.x = d.cx = startingXPos;
+        d.y = d.cy = startingYPos;
       });
     }
 

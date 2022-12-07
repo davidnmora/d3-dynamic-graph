@@ -6449,7 +6449,8 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     focusStrokeThickness: 5,
     linkColor: (link2) => "white",
     nodeColor: (node2) => "skyblue",
-    nodeStartPos: (node2) => 100,
+    nodeStartXPos: null,
+    nodeStartYPos: null,
     nodeRadius: (node2) => 5,
     tooltipInnerHTML: (node2) => node2["id"]
   };
@@ -6457,7 +6458,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     pubVar = Object.assign({}, pubVar, optionalPubVars);
   let link$1, node, simulation$1;
   let svg = d3SelectedVisContainer.append("svg").attr("width", pubVar.width).attr("height", pubVar.height);
-  let tooltip = select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+  let tooltip = select("body").append("div").attr("class", "d3-dynamic-graph-tooltip").style("opacity", 0).style("position", "absolute");
   const displayNodeTooltip = (d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
     tooltip.html(pubVar.tooltipInnerHTML(d)).style("left", event.pageX + "px").style("top", event.pageY - 28 + "px");
@@ -6534,7 +6535,10 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     if (!node) {
       node = svg.append("g").attr("class", "nodes").selectAll("circle");
       nodes.forEach((d) => {
-        d.x = d.cx = d.y = d.cy = pubVar.nodeStartPos(d);
+        const startingXPos = pubVar.nodeStartXPos ? pubVar.nodeStartXPos(d) : Math.random() * pubVar.width;
+        const startingYPos = pubVar.nodeStartYPos ? pubVar.nodeStartYPos(d) : Math.random() * pubVar.height;
+        d.x = d.cx = startingXPos;
+        d.y = d.cy = startingYPos;
       });
     }
     node = node.data(nodes, (d) => d.id);
