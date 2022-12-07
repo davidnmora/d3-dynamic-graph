@@ -1,8 +1,12 @@
 ![Screenshot of DynamicGraph](https://raw.githubusercontent.com/davidnmora/dynamic-graph/master/dynamic-graph-screenshot.png "Screenshot of DynamicGraph")
 
-# DynamicGraph
+# d3-dynamic-graph
 
-`DynamicGraph` provides a high level API to create interactive, dynamically updating D3.js force-directed graph layout visualizations.
+A high level class for creating interactive, dynamically updating D3.js force-directed graph layout visualizations.
+
+```bash
+npm i d3-dynamic-graph
+```
 
 ### Why do I need this?
 
@@ -10,7 +14,9 @@ Turns out transitioning and animating between states in D3 Force Layout is trick
 
 With DynamicGraph, you can smoothly update graphs with a single line of code.
 
-# How to use DynamicGraph
+### Demo: [Play with it in an Observable notebook](https://observablehq.com/@davidnmora/d3-dynamic-graph-intro)
+
+# How to use d3-dynamic-graph
 
 ## Run the example locally
 
