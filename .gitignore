@@ -1,0 +1,7 @@
+node_modules
+public/tiles
+.vscode
+.idea
+
+dist/tiles
+dist/tiles/*
