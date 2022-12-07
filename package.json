@@ -6,12 +6,12 @@
   "files": [
     "dist"
   ],
-  "module": "./dist/dynamicgraph.js",
-  "main": "./dist/dynamicgraph.umd.cjs",
+  "module": "./dist/d3-dynamic-graph.js",
+  "main": "./dist/d3-dynamic-graph.umd.cjs",
   "exports": {
     ".": {
-      "import": "./dist/dynamicgraph.js",
-      "require": "./dist/dynamicgraph.umd.cjs"
+      "import": "./dist/d3-dynamic-graph.js",
+      "require": "./dist/d3-dynamic-graph.umd.cjs"
     }
   },
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidnmora/dynamicgraph.git"
+    "url": "git+https://github.com/davidnmora/d3-dynamic-graph.git"
   },
   "keywords": [
     "data",

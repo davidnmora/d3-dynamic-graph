@@ -3,7 +3,7 @@ export default {
     target: "es2019",
     minify: "terser",
     lib: {
-      entry: __dirname + "/src/dynamicgraph.js",
+      entry: __dirname + "/src/d3-dynamic-graph.js",
       name: "DynamicGraph",
       formats: ["es"],
     },

@@ -27,14 +27,20 @@ npm run build
 Get your graph data in the format
 
 ```javascript
-let nodes = [{id: "foo", ...}, {id: "bar", ...}, ...]
-let links = [{source: "foo", target: "bar"}, ...]
+const nodes = [{id: "foo", ...}, {id: "bar", ...}, ...]
+const links = [{source: "foo", target: "bar"}, ...]
 ```
 
 Create a parent container for the chart
 
 ```html
-<div id="dynamic-graph-container"></div>
+<div id="d3-dynamic-graph-container"></div>
+```
+
+Install package
+
+```bash
+npm i d3-dynamic-graph
 ```
 
 Create a graph with default properties
@@ -42,8 +48,8 @@ Create a graph with default properties
 ```javascript
 import DynamicGraph from "DynamicGraph";
 
-const container = d3.select("#dynamic-graph-container");
-let vis = DynamicGraph(container).updateVis(nodes, links);
+const container = d3.select("#d3-dynamic-graph-container");
+const vis = DynamicGraph(container).updateVis(nodes, links);
 // Then, later, after you've updated nodes and links, call updateVis to transition:
 vis.updateVis(updatedNodes, updatedLinks);
 // Voila! The graph gracefuly transitions states.
@@ -54,7 +60,7 @@ vis.updateVis(updatedNodes, updatedLinks);
 You can set optional parameters on instantiation via
 
 ```javascript
-let vis = DynamicGraph(container, {
+const vis = DynamicGraph(container, {
   width: 1000, // px
   nodeColor: (node) => node.color,
   // etc
@@ -64,7 +70,7 @@ let vis = DynamicGraph(container, {
 A number of commonly used aspects of the graph can also be updating after instantiation (feel free to add a PR with more!)
 
 ```javascript
-let vis = DynamicGraph(d3.select("#dynamic-graph-container"));
+const vis = DynamicGraph(d3.select("#dynamic-graph-container"));
 vis
   .nodeColor((node) => node.color)
   .nodeRadius((node) => node.radius)
