@@ -36,8 +36,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     .attr("height", pubVar.height);
 
   // FOCUS NODE: TOOLTIP AND NEIGHBOR HIGHLIGHT -------------------------------------------------------------------------
-  let tooltip = d3
-    .select("body")
+  let tooltip = d3SelectedVisContainer
     .append("div")
     .attr("class", "d3-dynamic-graph-tooltip")
     .style("opacity", 0)
@@ -56,7 +55,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
   };
 
   const setLinkStrokeWidth = (link, thickness) =>
-    d3
+    d3SelectedVisContainer
       .select(
         ".link-" +
           link.source[pubVar.nodeRefProp] +
@@ -73,7 +72,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
       : pubVar.unfocusStrokeThickness;
     // Get all neighbors via links, setting the link thickness simultaniously
     const neighborsSet = new Set([node[pubVar.nodeRefProp]]);
-    d3.selectAll("line.link").style("opacity", (link) => {
+    d3SelectedVisContainer.selectAll("line.link").style("opacity", (link) => {
       if (link.source[pubVar.nodeRefProp] === node[pubVar.nodeRefProp]) {
         neighborsSet.add(link.target[pubVar.nodeRefProp]);
         setLinkStrokeWidth(link, strokeThickness);
@@ -83,7 +82,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
       }
     });
     // Set the opacity of ego-node and neighbor nodes
-    d3.selectAll("circle.node").style("opacity", (node) => {
+    d3SelectedVisContainer.selectAll("circle.node").style("opacity", (node) => {
       const keepStatusQuo = (node) => {
         // Leave remaining "focused" highlighted
         if (node.focused) return pubVar.focusOpacity;

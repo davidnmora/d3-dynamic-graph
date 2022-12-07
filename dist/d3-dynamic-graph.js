@@ -887,9 +887,6 @@ function mouse(node) {
     event2 = event2.changedTouches[0];
   return point$4(node, event2);
 }
-function selectAll(selector2) {
-  return typeof selector2 === "string" ? new Selection$1([document.querySelectorAll(selector2)], [document.documentElement]) : new Selection$1([selector2 == null ? [] : selector2], root);
-}
 function touch(node, touches, identifier) {
   if (arguments.length < 3)
     identifier = touches, touches = sourceEvent().changedTouches;
@@ -6458,7 +6455,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     pubVar = Object.assign({}, pubVar, optionalPubVars);
   let link$1, node, simulation$1;
   let svg = d3SelectedVisContainer.append("svg").attr("width", pubVar.width).attr("height", pubVar.height);
-  let tooltip = select("body").append("div").attr("class", "d3-dynamic-graph-tooltip").style("opacity", 0).style("position", "absolute");
+  let tooltip = d3SelectedVisContainer.append("div").attr("class", "d3-dynamic-graph-tooltip").style("opacity", 0).style("position", "absolute");
   const displayNodeTooltip = (d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
     tooltip.html(pubVar.tooltipInnerHTML(d)).style("left", event.pageX + "px").style("top", event.pageY - 28 + "px");
@@ -6466,14 +6463,14 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
   const removeNodeTooltip = (d) => {
     tooltip.transition().duration(500).style("opacity", 0);
   };
-  const setLinkStrokeWidth = (link2, thickness) => select(
+  const setLinkStrokeWidth = (link2, thickness) => d3SelectedVisContainer.select(
     ".link-" + link2.source[pubVar.nodeRefProp] + ".link-" + link2.target[pubVar.nodeRefProp]
   ).attr("stroke-width", thickness);
   const changeNodeFocus = (node2, links, isInFocus) => {
     node2[pubVar.nodeRefProp];
     const strokeThickness = isInFocus ? pubVar.focusStrokeThickness : pubVar.unfocusStrokeThickness;
     const neighborsSet = /* @__PURE__ */ new Set([node2[pubVar.nodeRefProp]]);
-    selectAll("line.link").style("opacity", (link2) => {
+    d3SelectedVisContainer.selectAll("line.link").style("opacity", (link2) => {
       if (link2.source[pubVar.nodeRefProp] === node2[pubVar.nodeRefProp]) {
         neighborsSet.add(link2.target[pubVar.nodeRefProp]);
         setLinkStrokeWidth(link2, strokeThickness);
@@ -6482,7 +6479,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
         setLinkStrokeWidth(link2, strokeThickness);
       }
     });
-    selectAll("circle.node").style("opacity", (node3) => {
+    d3SelectedVisContainer.selectAll("circle.node").style("opacity", (node3) => {
       const keepStatusQuo = (node4) => {
         if (node4.focused)
           return pubVar.focusOpacity;
