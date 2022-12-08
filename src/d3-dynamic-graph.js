@@ -36,21 +36,26 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
     .attr("height", pubVar.height);
 
   // FOCUS NODE: TOOLTIP AND NEIGHBOR HIGHLIGHT -------------------------------------------------------------------------
-  let tooltip = d3SelectedVisContainer
+  const tooltip = d3SelectedVisContainer
     .append("div")
     .attr("class", "d3-dynamic-graph-tooltip")
     .style("opacity", 0)
     .style("position", "absolute");
 
-  const displayNodeTooltip = (d) => {
+  const displayNodeTooltip = (event, d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
     tooltip
       .html(pubVar.tooltipInnerHTML(d))
-      .style("left", d3.event.pageX + "px")
-      .style("top", d3.event.pageY - 28 + "px");
+      .style("left", event.pageX + "px")
+      .style("top", event.pageY - 28 + "px");
   };
 
-  const removeNodeTooltip = (d) => {
+  const updateTooltipPosition = (event) => {
+    const [mouseX, mouseY] = d3.pointer(event, this);
+    tooltip.style("left", mouseX + "px").style("top", mouseY - 28 + "px");
+  };
+
+  const removeNodeTooltip = () => {
     tooltip.transition().duration(500).style("opacity", 0);
   };
 
@@ -143,7 +148,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
         .forceSimulation()
         .force(
           "link",
-          d3.forceLink().id((node) => node.id)
+          d3.forceLink().id((node) => node[pubVar.nodeRefProp])
         )
         .force("charge", d3.forceManyBody().strength(-20))
         .force("center", d3.forceCenter(pubVar.width / 2, pubVar.height / 2))
@@ -197,20 +202,20 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
       .attr("class", "node")
       .attr("fill", pubVar.nodeColor)
       .style("opacity", pubVar.unfocusOpacity)
-      .on("mouseover", (node) => {
-        displayNodeTooltip(node);
+      .on("mouseover", (event, node) => {
+        displayNodeTooltip(event, node);
         changeNodeFocus(node, links, true);
       })
-      .on("mouseout", (node) => {
+      .on("mouseout", (event, node) => {
         if (!node.clicked) {
-          removeNodeTooltip(node);
+          removeNodeTooltip(event, node);
           changeNodeFocus(node, links, false);
         }
       })
-      .on("click", (node) => {
+      .on("click", (event, node) => {
         node.clicked = !node.clicked;
         if (!node.clicked) {
-          removeNodeTooltip(node);
+          removeNodeTooltip(event, node);
           changeNodeFocus(node, links, false);
         }
       })
@@ -283,21 +288,22 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
   }
 
   // DRAG EVENTS ______________________________
-  function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
   }
 
-  function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
+  function dragged(event) {
+    updateTooltipPosition(event);
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
   }
 
-  function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
   }
 
   // CREATE API ______________________________

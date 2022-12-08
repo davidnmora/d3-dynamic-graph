@@ -127,17 +127,8 @@
   const graphDataJSONUrl =
     "https://raw.githubusercontent.com/davidnmora/open-lattice-edm-vis/master/graph-data.json";
 
-  const [graph] = await Promise.all([
-    new Promise((res, rej) =>
-      d3.json(graphDataJSONUrl, function (error, JSONdata) {
-        if (error) {
-          rej(error);
-        } else {
-          res(JSONdata);
-        }
-      })
-    ),
-  ]);
+  const res = await fetch(graphDataJSONUrl);
+  const graph = await res.json();
 
   // 3. Format the specific fetched data into standard shape for DynamicGraph
   graph.nodesById = {};
