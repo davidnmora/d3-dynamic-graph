@@ -150,8 +150,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
           "link",
           d3.forceLink().id((node) => node[pubVar.nodeRefProp])
         )
-        .force("charge", d3.forceManyBody().strength(-20))
-        .force("center", d3.forceCenter(pubVar.width / 2, pubVar.height / 2))
+        .force("charge", d3.forceManyBody())
         .force("x", d3.forceX(pubVar.width / 2).strength(pubVar.centeringForce))
         .force(
           "y",
