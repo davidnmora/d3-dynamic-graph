@@ -1,7 +1,7 @@
 {
   "name": "d3-dynamic-graph",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A high level API to create interactive, smoothly updating D3.js force-directed graph layout data visualizations",
   "files": [
     "dist"
@@ -40,9 +40,9 @@
   "author": "David Mora",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davidnmora/deepscatter/issues"
+    "url": "https://github.com/davidnmora/d3-dynamic-graph/issues"
   },
-  "homepage": "https://github.com/davidnmora/deepscatter#readme",
+  "homepage": "https://github.com/davidnmora/d3-dynamic-graph#readme",
   "dependencies": {
     "d3": "^7.7.0"
   },
