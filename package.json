@@ -17,7 +17,9 @@
   "scripts": {
     "dev": "vite --port 3344 --host",
     "build": "vite build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "pub-patch": "npm version patch --force && npm publish",
+    "pub-minor": "npm version minor --force && npm publish"
   },
   "repository": {
     "type": "git",
