@@ -53,9 +53,11 @@ Create a graph with default properties
 
 ```javascript
 import DynamicGraph from "DynamicGraph";
+// client supplies d3, largely for Observable Notebook compatability
+import * as d3 from "d3";
 
 const container = d3.select("#d3-dynamic-graph-container");
-const vis = DynamicGraph(container).updateVis(nodes, links);
+const vis = DynamicGraph(container, d3).updateVis(nodes, links);
 // Then, later, after you've updated nodes and links, call updateVis to transition:
 vis.updateVis(updatedNodes, updatedLinks);
 // Voila! The graph gracefuly transitions states.
@@ -66,7 +68,7 @@ vis.updateVis(updatedNodes, updatedLinks);
 You can set optional parameters on instantiation via
 
 ```javascript
-const vis = DynamicGraph(container, {
+const vis = DynamicGraph(container, d3, {
   width: 1000, // px
   nodeColor: (node) => node.color,
   // etc
@@ -76,9 +78,17 @@ const vis = DynamicGraph(container, {
 A number of commonly used aspects of the graph can also be updating after instantiation (feel free to add a PR with more!)
 
 ```javascript
-const vis = DynamicGraph(d3.select("#dynamic-graph-container"));
+const vis = DynamicGraph(d3.select("#dynamic-graph-container"), d3);
 vis
   .nodeColor((node) => node.color)
   .nodeRadius((node) => node.radius)
   .tooltipInnerHTML((node) => "<div>" + node.info + "</div>");
+```
+
+# For contributing to the package
+
+```bash
+npm run dev # start local server for examples
+
+npm run build # build project, put output in /dist
 ```

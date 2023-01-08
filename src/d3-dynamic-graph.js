@@ -1,6 +1,4 @@
-import * as d3 from "d3";
-
-const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
+const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
   // 1. GLOBAL VARIALBES -------------------------------------------------------------------------
   // Public variables width default settings
   let pubVar = {
@@ -24,7 +22,7 @@ const DynamicGraph = (d3SelectedVisContainer, optionalPubVars) => {
   };
 
   // Merge any specififed publiv variables
-  if (optionalPubVars) pubVar = Object.assign({}, pubVar, optionalPubVars);
+  if (optionalPubVars) pubVar = { ...pubVar, ...optionalPubVars };
 
   // Private global variables
   let link, node, simulation; // globals set within json request response

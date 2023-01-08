@@ -148,7 +148,7 @@
   }
 
   // 5. Initialize DynamicGraph,
-  const vis = DynamicGraph(d3.select("#dynamic-graph-container"), {
+  const vis = DynamicGraph(d3.select("#dynamic-graph-container"), d3, {
     width: 1000,
   })
     .nodeColor(nodeColor)
