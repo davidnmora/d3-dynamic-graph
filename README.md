@@ -65,13 +65,33 @@ vis.updateVis(updatedNodes, updatedLinks);
 
 ## DynamicGraph API:
 
-You can set optional parameters on instantiation via
+You can set optional parameters on instantiation, otherwise they recieve these default values:
 
 ```javascript
 const vis = DynamicGraph(container, d3, {
-  width: 1000, // px
-  nodeColor: (node) => node.color,
-  // etc
+  width: 600, // pixles
+  height: 600, // pixles
+  transitionTime: 750, // milliseconds
+  centeringForce: 0.09,
+
+  // e.g. Nodes: [{id: "foo"}, {id: "bar"}] Links: [{source: "foo", target: "bar"}]
+  nodeRefProp: "id",
+  unfocusOpacity: 0.4,
+  focusOpacity: 0.95,
+  unfocusStrokeThickness: 0.5,
+  focusStrokeThickness: 5,
+
+  // Link and Node functions
+  linkColor: (link) => "white",
+  nodeColor: (node) => "skyblue",
+  nodeStartXPos: null, // function, returns pixels
+  nodeStartYPos: null, // function, returns pixels
+  nodeRadius: (node) => 5, // pixles
+
+  // Tooltip:
+  tooltipInnerHTML: (node) => node["id"],
+  tooltipXOffset: 16,
+  tooltipYOffset: 24,
 });
 ```
 
