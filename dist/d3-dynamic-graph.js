@@ -14,20 +14,24 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
     nodeStartXPos: null,
     nodeStartYPos: null,
     nodeRadius: (node2) => 5,
-    tooltipInnerHTML: (node2) => node2["id"]
+    tooltipInnerHTML: (node2) => node2["id"],
+    tooltipXOffset: 16,
+    tooltipYOffset: 24
   };
   if (optionalPubVars)
     pubVar = { ...pubVar, ...optionalPubVars };
   let link, node, simulation;
   let svg = d3SelectedVisContainer.append("svg").attr("width", pubVar.width).attr("height", pubVar.height);
   const tooltip = d3SelectedVisContainer.append("div").attr("class", "d3-dynamic-graph-tooltip").style("opacity", 0).style("position", "absolute");
+  const getX = (base) => base + pubVar.tooltipXOffset + "px";
+  const getY = (base) => base + pubVar.tooltipYOffset + "px";
   const displayNodeTooltip = (event, d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
-    tooltip.html(pubVar.tooltipInnerHTML(d)).style("left", event.pageX + "px").style("top", event.pageY - 28 + "px");
+    tooltip.html(pubVar.tooltipInnerHTML(d)).style("left", getX(event.pageX)).style("top", getY(event.pageY));
   };
   const updateTooltipPosition = (event) => {
     const [mouseX, mouseY] = d3.pointer(event, globalThis);
-    tooltip.style("left", mouseX + "px").style("top", mouseY - 28 + "px");
+    tooltip.style("left", getX(mouseX)).style("top", getY(mouseY));
   };
   const removeNodeTooltip = () => {
     tooltip.transition().duration(500).style("opacity", 0);
