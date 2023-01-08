@@ -12,13 +12,17 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
     focusOpacity: 0.95,
     unfocusStrokeThickness: 0.5,
     focusStrokeThickness: 5,
-    // Link and Node functions ("dummy" unless replaced by API call)
+    // Link and Node functions
     linkColor: (link) => "white",
     nodeColor: (node) => "skyblue",
     nodeStartXPos: null, // function, returns pixels
     nodeStartYPos: null, // function, returns pixels
     nodeRadius: (node) => 5, // pixles
+
+    // Tooltip:
     tooltipInnerHTML: (node) => node["id"],
+    tooltipXOffset: 16,
+    tooltipYOffset: 24,
   };
 
   // Merge any specififed publiv variables
@@ -40,17 +44,20 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
     .style("opacity", 0)
     .style("position", "absolute");
 
+  const getX = (base) => base + pubVar.tooltipXOffset + "px";
+  const getY = (base) => base + pubVar.tooltipYOffset + "px";
+
   const displayNodeTooltip = (event, d) => {
     tooltip.transition().duration(200).style("opacity", 0.9);
     tooltip
       .html(pubVar.tooltipInnerHTML(d))
-      .style("left", event.pageX + "px")
-      .style("top", event.pageY - 28 + "px");
+      .style("left", getX(event.pageX))
+      .style("top", getY(event.pageY));
   };
 
   const updateTooltipPosition = (event) => {
     const [mouseX, mouseY] = d3.pointer(event, this);
-    tooltip.style("left", mouseX + "px").style("top", mouseY - 28 + "px");
+    tooltip.style("left", getX(mouseX)).style("top", getY(mouseY));
   };
 
   const removeNodeTooltip = () => {
