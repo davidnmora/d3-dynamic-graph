@@ -77,13 +77,17 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
   };
   function ticked() {
     link.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y).attr("x2", (d) => d.target.x).attr("y2", (d) => d.target.y);
-    node.attr(
-      "cx",
-      (d) => d.x = Math.max(d.radius, Math.min(pubVar.width - d.radius, d.x))
-    ).attr(
-      "cy",
-      (d) => d.y = Math.max(d.radius, Math.min(pubVar.height - d.radius, d.y))
-    );
+    node.attr("cx", (d) => {
+      const r = pubVar.nodeRadius(d);
+      const x = Math.max(r, Math.min(pubVar.width - r, d.x));
+      d.x = x;
+      return x;
+    }).attr("cy", (d) => {
+      const r = pubVar.nodeRadius(d);
+      const y = Math.max(r, Math.min(pubVar.width - r, d.y));
+      d.y = y;
+      return y;
+    });
   }
   function updateVis(nodes, links) {
     if (!simulation) {
@@ -128,7 +132,7 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
         changeNodeFocus(node2, links, false);
       }
     }).call((node2) => {
-      node2.transition().duration(pubVar.transitionTime).attr("r", pubVar.nodeRadius);
+      node2.transition().duration(pubVar.transitionTime).attr("r", (d) => pubVar.nodeRadius(d));
     }).call(
       d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
     ).merge(node);
