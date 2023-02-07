@@ -133,16 +133,18 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
       .attr("y2", (d) => d.target.y);
 
     node
-      .attr(
-        "cx",
-        (d) =>
-          (d.x = Math.max(d.radius, Math.min(pubVar.width - d.radius, d.x)))
-      )
-      .attr(
-        "cy",
-        (d) =>
-          (d.y = Math.max(d.radius, Math.min(pubVar.height - d.radius, d.y)))
-      );
+      .attr("cx", (d) => {
+        const r = pubVar.nodeRadius(d);
+        const x = Math.max(r, Math.min(pubVar.width - r, d.x));
+        d.x = x;
+        return x;
+      })
+      .attr("cy", (d) => {
+        const r = pubVar.nodeRadius(d);
+        const y = Math.max(r, Math.min(pubVar.width - r, d.y));
+        d.y = y;
+        return y;
+      });
   }
 
   // 5. UPDATE GRAPH AFTER FILTERING DATA -------------------------------------------------------------------------
@@ -227,7 +229,7 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
         node
           .transition()
           .duration(pubVar.transitionTime)
-          .attr("r", pubVar.nodeRadius);
+          .attr("r", (d) => pubVar.nodeRadius(d));
       })
       .call(
         d3
