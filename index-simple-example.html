@@ -28,4 +28,12 @@
     .nodeRadius((node) => node.radius)
     .tooltipInnerHTML((node) => node.id)
     .updateVis(nodes, links);
+
+  setTimeout(() => {
+    vis.nodeRadius((d) => 100).updateVis(nodes, links);
+  }, 500);
+
+  setTimeout(() => {
+    vis.nodeColor((d) => "fuchsia").updateVis(nodes, links);
+  }, 1000);
 </script>

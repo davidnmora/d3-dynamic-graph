@@ -133,6 +133,8 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
       .attr("y2", (d) => d.target.y);
 
     node
+      .attr("r", pubVar.nodeRadius)
+      .attr("fill", pubVar.nodeColor)
       .attr("cx", (d) => {
         const r = pubVar.nodeRadius(d);
         const x = Math.max(r, Math.min(pubVar.width - r, d.x));
