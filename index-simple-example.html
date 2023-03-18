@@ -25,15 +25,15 @@
   const vis = DynamicGraph(d3.select("#dynamic-graph-container"), d3, {
     width: 1000,
   })
-    .nodeRadius((node) => node.radius)
+    .nodeRadius((node) => 50)
     .tooltipInnerHTML((node) => node.id)
     .updateVis(nodes, links);
 
   setTimeout(() => {
-    vis.nodeRadius((d) => 100).updateVis(nodes, links);
+    vis.nodeRadius((node) => node.radius).updateVis(nodes, links);
   }, 500);
 
   setTimeout(() => {
-    vis.nodeColor((d) => "fuchsia").updateVis(nodes, links);
+    vis.pubVar({ nodeColor: (node) => "fuchsia" }).updateVis(nodes, links);
   }, 1000);
 </script>

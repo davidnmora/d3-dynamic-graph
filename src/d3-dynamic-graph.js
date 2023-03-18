@@ -329,6 +329,13 @@ const DynamicGraph = (d3SelectedVisContainer, d3, optionalPubVars) => {
 
   // Optional settable values
 
+  // Update any settable variable
+  _DynamicGraph.pubVar = (pubVarUpdates) => {
+    if (!pubVarUpdates) return pubVar;
+    pubVar = { ...pubVar, ...pubVarUpdates };
+    return _DynamicGraph;
+  };
+
   // Provide a custom function to set node colors on vis update
   _DynamicGraph.nodeColor = (colorSetter) => {
     if (!colorSetter) return pubVar.nodeColor;
